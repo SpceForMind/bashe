@@ -17,7 +17,7 @@ class HeapManager:
 
     def remove_items(self,
                      count: int):
-        if count > self.__max_count_to_take or count < 0:
+        if count > self.__max_count_to_take or count < 1:
             raise ValueError(f'Count: {count} out of range 1 <= count <= 3')
 
         if count > len(self.__heap):

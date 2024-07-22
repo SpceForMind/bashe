@@ -31,7 +31,12 @@ def start_window():
     window.mainloop()
 
 def process_step(root, label, entry):
-    heap_manager.remove_items(count=int(entry.get()))
+    try:
+        heap_manager.remove_items(count=int(entry.get()))
+    except Exception as err:
+        tkinter.messagebox.showerror(title='ERROR', message=err)
+        return
+
     label["text"] = f"Heap size: {heap_manager.size()}"  # получаем введенный текст
     if heap_manager.is_empty():
         tkinter.messagebox.showinfo('INFO', 'You Win')
@@ -61,11 +66,14 @@ def game(window, select_var):
     root.geometry("400x400")
     label = ttk.Label()
     label["text"] = f"Heap size: {heap_manager.size()}"
-    label.pack(anchor=NW, padx=6, pady=6)
+    label.pack(anchor=CENTER, padx=6, pady=6)
+    label_entry = ttk.Label()
+    label_entry['text'] = 'Count to take'
+    label_entry.pack(anchor=NW, padx=6, pady=6)
     entry = ttk.Entry()
     entry.pack(anchor=NW, padx=6, pady=6)
 
-    btn = ttk.Button(text="Click", command=lambda: process_step(root, label, entry))
+    btn = ttk.Button(text="OK", command=lambda: process_step(root, label, entry))
     btn.pack(anchor=NW, padx=6, pady=6)
 
     if select_var.get() == 'Computer First':
